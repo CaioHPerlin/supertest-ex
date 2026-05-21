@@ -17,7 +17,7 @@ describe("Testes de integração na API /comments", () => {
 
     expect(res.statusCode).toBe(200);
     expect(res.body).toBeInstanceOf(Array);
-    expect(res.body.length).toBe(2);
+    expect(res.body).toHaveLength(3);
   });
 
   it("POST /comments deve criar um novo comentário", async () => {
@@ -60,6 +60,18 @@ describe("Testes de integração na API /comments", () => {
 
     res.body.forEach((comment) => {
       expect(comment.userId).toBe(1);
+    });
+  });
+
+  it("GET /tasks/:id/comments deve retornar comentários da tarefa", async () => {
+    const res = await request(app).get("/tasks/1/comments");
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toBeInstanceOf(Array);
+    expect(res.body).toHaveLength(2);
+
+    res.body.forEach((comment) => {
+      expect(comment.taskId).toBe(1);
     });
   });
 });
