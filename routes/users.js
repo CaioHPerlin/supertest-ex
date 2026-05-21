@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { users } = require("../data/usersData");
 const { tasks } = require("../data/tasksData");
+const { comments } = require("../data/commentsData");
 
 router.get("/", (req, res) => {
   res.json(users);
@@ -41,6 +42,22 @@ router.get("/:id/tasks", (req, res) => {
 
   res.json(userTasks);
 });
+
+router.get("/:id/comments", (req, res) => {
+  const id = Number(req.params.id);
+
+  const user = users.find((user) => user.id === id);
+
+  if (!user) {
+    return res.status(404).json({
+      error: "Usuário não encontrado.",
+    });
+  }
+
+  const userComments = comments.filter((comment) => comment.userId === id);
+  res.json(userComments);
+});
+
 
 router.get("/:id", (req, res) => {
   const id = Number(req.params.id);

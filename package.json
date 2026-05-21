@@ -18,11 +18,5 @@
   "devDependencies": {
     "jest": "^30.4.2",
     "supertest": "^7.2.2"
-  },
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "tests/comments.test.js"
-    ]
   }
 }
